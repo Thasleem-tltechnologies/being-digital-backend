@@ -1,20 +1,27 @@
-import mysql from 'mysql2';
+// dbConnection.js
+import sql from 'mssql';
 
-// Create a connection to the database
-const connection = mysql.createConnection({
-  host: '127.0.0.7',     // Replace with your database host
-  user: 'root', // Replace with your database username
-  password: '789800', // Replace with your database password
-  database: 'bd_backend', // Replace with your database name
-});
+// Database configuration
+const config = {
+  user: 'db_aa5acd_beingdigital_admin',
+  password: 'Sangi@2024',
+  server: 'SQL9001.site4now.net', 
+  database: 'db_aa5acd_beingdigital',
+  options: {
+    encrypt: true, 
+    trustServerCertificate: false,
+  },
+};
 
-// Connect to the database
-connection.connect((err) => {
-  if (err) {
+// Create a function to connect to the database
+export const connectToDatabase = async () => {
+  try {
+    await sql.connect(config);
+    console.log('Connected to the database.');
+  } catch (err) {
     console.error('Database connection failed:', err);
-    return;
+    throw err; // Rethrow error for handling in calling function
   }
-  console.log('Connected to the database.');
-});
+};
 
-export default connection;
+export default sql;
